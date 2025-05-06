@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gundareva Angela. о компании</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+        }
+        header {
+            background-color: #005baa;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        h1 {
+            color: white;
+        font-size: 50px;}
+            
+        h2 {
+            color: #005baa;
+            font-size: 30px;
+        }
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        img {
+            width: 100%; 
+            height: 100%;
+            object-fit: contain; /* Чтобы картинка не обрезалась и сохраняла пропорции */
+            z-index: 0; 
+        }
+        .smaller-image {
+            max-width: 60%; /* Уменьшаем ширину до 60% от контейнера */
+            height: auto; /* Автоматически рассчитываем высоту, чтобы сохранить пропорции */
+            margin: 0 auto; /* Центрируем изображение */
+            display: block; /* Убираем возможные пробелы снизу */
+        }
+        .to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #005baa;
+            color: white;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f7f7f7;
+            display: flex;
+            gap: 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, scale 0.3s ease;
+            z-index: 1000;
+        }
+        .bottom-menu:hover {
+            scale: 1.2;
+        }
+        .bottom-menu img {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><b>Дальневосточная энергетическая компания (ДЭК)</b></h1>
+        <p><i>Надежный поставщик электроэнергии на Дальнем Востоке России</i></p>
+    </header>
+
+    <main class="content">
+        <h2>О компании</h2>
+        <p><b>ПАО "ДЭК"</b> — крупнейшая энергосбытовая компания Дальнего Востока, <u>основанная в 2007 году</u>. Компания входит в структуру РусГидро и обслуживает миллионы бытовых и корпоративных потребителей.</p>
+
+        <img src="comp1.jpg">
+
+        <p>Основные направления деятельности:</p>
+        <ul>
+            <li><b>Продажа электроэнергии</b> и мощности населению и юридическим лицам</li>
+            <li><b>Работа с долгами</b> и просроченной задолженностью</li>
+            <li><b>Развитие онлайн-сервисов</b> для клиентов</li>
+        </ul>
+
+        <h2>История компании</h2>
+        <p>История началась с объединения нескольких региональных сбытовых компаний. <b>В 2007 году</b> произошло формирование единой структуры — <i>ПАО «ДЭК»</i>, в состав которой вошли предприятия из Приморского, Хабаровского краёв, Амурской области, ЕАО и Якутии.</p>
+
+        <img src="comp2.jpg" class="smaller-image">
+
+        <p>Сегодня ДЭК — <u>это свыше 4 млн потребителей</u>, обслуживаемых через сеть современных офисов и электронных платформ.</p>
+
+        <h2>Ценности и принципы</h2>
+        <p>Компания ориентирована на:</p>
+        <ul>
+            <li><b>Эффективность</b> — внедрение цифровых технологий</li>
+            <li><b>Прозрачность</b> — открытая работа с клиентами</li>
+            <li><b>Социальную ответственность</b> — участие в региональных программах</li>
+        </ul>
+
+        <img src="comp3.jpg" class="smaller-image">
+
+        <p>Подробности на <a href="https://www.dvec.ru/" target="_blank">официальном сайте ДЭК</a>.</p>
+    </main>
+
+    <a href="#" class="to-top">↑</a>
+
+    <div class="bottom-menu">
+        <a href="company.html"><img src="../iconshome.png" ></a>
+        <a href="../новости/news.html"><img src="../iconsnews.png" ></a>
+        <a href="../currency.html"><img src="../iconscurrency.png" ></a>
+        <a href="../контакты/contacts.html"><img src="../iconscontact.png" ></a>
+        <a href="../video.html"><img src="../iconsvideo.png" ></a>
+    </div>
+</body>
+<footer>
+</footer>
+</html>
