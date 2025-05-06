@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс юаня</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-32x32.png">
+    <link rel="icon" href="favicon-16x16.png">
+   <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+        header {
+            background-color: #005baa;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+        }
+        main {
+            padding: 20px;
+        }
+        h2 {
+            color: #005baa;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        canvas {
+            margin-top: 40px;
+        }
+        .to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #005baa;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f7f7f7;
+            display: flex;
+            gap: 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, scale 0.3s ease;
+            z-index: 1000;
+        }
+        .bottom-menu:hover {
+            scale: 1.2;
+        }
+        .bottom-menu img {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let cnyRate = null;
+
+        async function getCNYRate() {
+            const res = await fetch("https://www.cbr-xml-daily.ru/daily_json.js");
+            const data = await res.json();
+            cnyRate = data.Valute.CNY.Value;
+        }
+
+        function isValidNumber(value) {
+            return value !== "" && !isNaN(value) && parseFloat(value) >= 0;
+        }
+
+        async function convertToCurrency() {
+            if (!cnyRate) await getCNYRate();
+
+            const rublesInput = document.getElementById("amount").value;
+            if (!isValidNumber(rublesInput)) {
+                document.getElementById("result").textContent = "Введите корректную положительную сумму в рублях.";
+                return;
+            }
+
+            const rubles = parseFloat(rublesInput);
+            const result = rubles / cnyRate;
+            document.getElementById("result").textContent = rubles + " ₽ = " + result.toFixed(2) + " ¥";
+        }
+
+        async function convertToRUB() {
+            if (!cnyRate) await getCNYRate();
+
+            const cnyInput = document.getElementById("amount").value;
+            if (!isValidNumber(cnyInput)) {
+                document.getElementById("result").textContent = "Введите корректную положительную сумму в юанях.";
+                return;
+            }
+
+            const cny = parseFloat(cnyInput);
+            const result = cny * cnyRate;
+            document.getElementById("result").textContent = cny + " ¥ = " + result.toFixed(2) + " ₽";
+        }
+
+        // Данные курса CNY за апрель 2025
+        const chartLabels = [
+            "01.04.2025", "02.04.2025", "03.04.2025", "04.04.2025",
+            "05.04.2025", "08.04.2025", "09.04.2025", "10.04.2025",
+            "11.04.2025", "12.04.2025", "15.04.2025", "16.04.2025",
+            "17.04.2025", "18.04.2025", "19.04.2025", "22.04.2025",
+            "23.04.2025", "24.04.2025", "25.04.2025", "26.04.2025",
+            "29.04.2025", "30.04.2025"
+        ];
+
+        const chartData = [
+            12.8047, 12.7771, 12.7332, 12.7135, 12.7795,
+            12.7969, 12.7043, 12.7306, 12.6985, 12.6960,
+            12.6620, 12.6216, 12.6292, 12.6282, 12.5640,
+            12.5706, 12.5951, 12.6251, 12.6390, 12.6458,
+            12.6403, 12.6139
+        ];
+
+        window.onload = function () {
+            getCNYRate();
+
+            const context = document.getElementById('exchangeRateChart').getContext('2d');
+
+            new Chart(context, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Курс CNY к RUB',
+                        data: chartData,
+                        backgroundColor: 'rgb(159, 198, 173)',
+                        borderColor: 'rgb(132, 187, 144)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    onClick: function(event, bars) {
+                        if (bars.length > 0) {
+                            const index = bars[0].index;
+                            const date = chartLabels[index];
+                            const rate = chartData[index];
+                            alert(`Дата: ${date}\nКурс: ${rate} ₽`);
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: { display: true, text: 'Курс (₽)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Дата' }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <header>
+        Конвертер валют (китайский юань)
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Конвертер (только ₽ и ¥)</h2>
+            <p>Курс обновляется автоматически по данным <a href="https://cbr.ru/currency_base/daily/" target="_blank">ЦБ РФ</a></p>
+            <input type="number" id="amount" placeholder="Введите сумму">
+            <button onclick="convertToCurrency()">Перевести из рублей</button>
+            <button onclick="convertToRUB()">Перевести в рубли</button>
+            <p id="result"></p>
+
+            <canvas id="exchangeRateChart" width="600" height="300"></canvas>
+        </div>
+        <div style="text-align: center; padding: 20px;">  Данная страница поможет вам с переводом только ₽ и ¥</div>
+    </main>
+
+    <footer >
+       
+    </footer>
+
+    <a href="#" class="to-top">↑</a>
+
+    <div class="bottom-menu">
+        <a href="компания/company.html"><img src="iconshome.png"></a>
+        <a href="новости/news.html"><img src="iconsnews.png" ></a>
+        <a href="currency.html"><img src="iconscurrency.png" ></a>
+        <a href="контакты/contacts.html"><img src="iconscontact.png" ></a>
+        <a href="video.html"><img src="iconsvideo.png" ></a>
+    </div>
+</body>
+<footer>
+</footer>
+</html>
